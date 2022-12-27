@@ -1,26 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useContext } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import styled from "styled-components";
+
+import CountryDetails from "./pages/CountryDetails";
+import Home from "./pages/Home";
+import SharedContent from "./pages/SharedContent";
+import { ThemeContext } from "./store/theme-context";
 
 function App() {
+  const { isDarkMode } = useContext(ThemeContext);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppContainer isDarkModeActive={isDarkMode}>
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/"
+            element={<SharedContent />}>
+            <Route
+              index
+              element={<Home />}
+            />
+            <Route
+              path="/countries/:countryCode"
+              element={<CountryDetails />}
+            />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </AppContainer>
   );
 }
 
 export default App;
+
+const AppContainer = styled.div<{ isDarkModeActive: boolean }>`
+  width: 100%;
+  height: 100%;
+  background-color: ${props => (props.isDarkModeActive ? "var(--very-dark-blue)" : "var(--very-light-gray)")};
+`;
