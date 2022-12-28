@@ -1,7 +1,11 @@
 import React from "react";
 
 const CountryDetails = () => {
-  return <div>Detailpage</div>;
+  return (
+    <div>
+      <h1>DetailPage</h1>
+    </div>
+  );
 };
 
 export default CountryDetails;

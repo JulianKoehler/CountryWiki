@@ -6,12 +6,11 @@ export const ThemeContext = React.createContext<Theme>({
   changeThemeHandler: () => {},
 });
 
-const ThemeContextProvider: React.FC<{ children: React.ReactNode }> = props => {
+const ThemeProvider: React.FC<{ children: React.ReactNode }> = props => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   const changeThemeHandler = () => {
     setIsDarkMode(prev => !prev);
-    console.log("hi");
   };
 
   const contextValue = {
@@ -22,4 +21,4 @@ const ThemeContextProvider: React.FC<{ children: React.ReactNode }> = props => {
   return <ThemeContext.Provider value={contextValue}>{props.children}</ThemeContext.Provider>;
 };
 
-export default ThemeContextProvider;
+export default ThemeProvider;

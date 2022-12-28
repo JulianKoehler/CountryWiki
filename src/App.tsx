@@ -22,7 +22,7 @@ function App() {
               element={<Home />}
             />
             <Route
-              path="/countries/:countryCode"
+              path="countries/:countryCode"
               element={<CountryDetails />}
             />
           </Route>
@@ -35,7 +35,12 @@ function App() {
 export default App;
 
 const AppContainer = styled.div<{ isDarkModeActive: boolean }>`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
   height: 100%;
+  transition: all 0.35s;
   background-color: ${props => (props.isDarkModeActive ? "var(--very-dark-blue)" : "var(--very-light-gray)")};
+  color: ${props => (props.isDarkModeActive ? "var(--white)" : "var(--blackish-blue)")};
 `;

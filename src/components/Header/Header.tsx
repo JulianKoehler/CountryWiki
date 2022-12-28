@@ -21,19 +21,22 @@ const Header: React.FC = () => {
 export default Header;
 
 const HeaderContainer = styled.header<{ darkMode: boolean }>`
+  position: fixed;
+  top: 0;
+  width: 100%;
   height: 80px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.0562443);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 5rem;
-  background-color: ${props => (props.darkMode ? "var(--very-dark-blue)" : "var(--white)")};
-  color: ${props => (props.darkMode ? "var(--white)" : "var(--dark-blue)")};
+  padding: var(--homepage-padding);
+  background-color: ${props => (props.darkMode ? "var(--dark-blue)" : "var(--white)")};
+  color: ${props => (props.darkMode ? "var(--white)" : "var(--blackish-blue)")};
 `;
 
 const DarkModeBtn = styled.button<{ darkMode: boolean }>`
   background-color: var(--white);
-  color: ${props => (props.darkMode ? "var(--white)" : "var(--dark-blue)")};
+  color: ${props => (props.darkMode ? "var(--white)" : "var(--blackish-blue)")};
   font-family: inherit;
   font-weight: 800;
   cursor: pointer;
@@ -61,7 +64,7 @@ const DarkModeBtn = styled.button<{ darkMode: boolean }>`
   }
 
   &:hover {
-    color: ${props => (props.darkMode ? "var(--dark-blue)" : "var(--white)")};
+    color: ${props => (props.darkMode ? "var(--blackish-blue)" : "var(--white)")};
   }
 
   &:hover::before {
