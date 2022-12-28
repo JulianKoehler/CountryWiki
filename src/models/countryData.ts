@@ -2,6 +2,7 @@
 interface Country {
   altSpellings: string[];
   area: number;
+  borders: string[];
   capital: string[];
   capitalInfo: {
     latlng: [number, number];
@@ -20,7 +21,7 @@ interface Country {
   };
   continents: string[];
   currencies: {
-    XCD: {
+    [key: string]: {
       name: string;
       symbol: string;
     };
@@ -66,6 +67,10 @@ interface Country {
     official: string;
   };
   population: number;
+  postalCode: {
+    format: string;
+    regex: string;
+  };
   region: string;
   startOfWeek: string;
   status: string;

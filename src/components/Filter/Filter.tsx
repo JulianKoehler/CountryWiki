@@ -28,7 +28,7 @@ export default Filter;
 
 const DropDown = styled.select<{ isDarkModeActive: boolean }>`
   border: none;
-  padding: 1rem 3rem 1rem 1rem;
+  padding: 1.5rem 3rem 1.5rem 1rem;
   border: none;
   font-family: inherit;
   color: ${props => (props.isDarkModeActive ? "var(--white)" : "var(--blackish-blue)")};

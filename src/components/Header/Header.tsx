@@ -32,6 +32,7 @@ const HeaderContainer = styled.header<{ darkMode: boolean }>`
   padding: var(--homepage-padding);
   background-color: ${props => (props.darkMode ? "var(--dark-blue)" : "var(--white)")};
   color: ${props => (props.darkMode ? "var(--white)" : "var(--blackish-blue)")};
+  z-index: 10;
 `;
 
 const DarkModeBtn = styled.button<{ darkMode: boolean }>`

@@ -3,12 +3,12 @@ import styled from "styled-components";
 import CountryCardProps from "../../models/countryCardProps";
 import { ThemeContext } from "../../store/theme-context";
 
+export function formatNumber(value: number) {
+  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 const CountryCard: React.FC<CountryCardProps> = props => {
   const { isDarkMode } = useContext(ThemeContext);
-
-  function formatNumber(value: number) {
-    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  }
 
   return (
     <Card isDarkModeActive={isDarkMode}>
