@@ -19,13 +19,9 @@ const GlobalStyles = createGlobalStyle<GlobalStylesProps>`
   --homepage: 14px;
   --country: 16px;
 
-  /* Breakpoint */
-  --monitor: 1920px;
-  --laptop: 1345px;
-  --mobile: 600px;
-
   /* Measures */
   --homepage-padding: 0 5rem;
+  --padding-mobile: 0 1.2em;
 }
 
 *,

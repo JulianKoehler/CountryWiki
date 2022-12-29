@@ -50,6 +50,7 @@ const Card = styled.div<{ isDarkModeActive: boolean }>`
   background-color: ${props => (props.isDarkModeActive ? "var(--dark-blue)" : "var(--white)")};
   box-shadow: 0px 0px 7px 2px rgba(0, 0, 0, 0.0294384);
   transition: transform 1s;
+  overflow: hidden;
 
   &:hover {
     cursor: pointer;

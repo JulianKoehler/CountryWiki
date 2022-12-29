@@ -33,6 +33,17 @@ const HeaderContainer = styled.header<{ darkMode: boolean }>`
   background-color: ${props => (props.darkMode ? "var(--dark-blue)" : "var(--white)")};
   color: ${props => (props.darkMode ? "var(--white)" : "var(--blackish-blue)")};
   z-index: 10;
+
+  @media (max-width: 700px) {
+    padding: var(--padding-mobile);
+    font-size: 18px;
+  }
+
+  @media (max-width: 400px) {
+    & h1 {
+      font-size: 14px;
+    }
+  }
 `;
 
 const DarkModeBtn = styled.button<{ darkMode: boolean }>`

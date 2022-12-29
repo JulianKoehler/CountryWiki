@@ -43,6 +43,14 @@ export default BorderCountries;
 
 const BorderCountryList = styled.div`
   margin-top: 2rem;
+
+  @media (max-width: 700px) {
+    & span {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-size: 16px;
+    }
+  }
 `;
 
 const Button = styled.button<{ isDarkModeActive: boolean }>`
@@ -54,8 +62,9 @@ const Button = styled.button<{ isDarkModeActive: boolean }>`
   padding: 5px 27px 4px;
   cursor: pointer;
   margin: 0.5rem;
+  transition: transform 0.25s;
 
   &:hover {
-    transform: scale(0.98);
+    transform: scale(0.95);
   }
 `;

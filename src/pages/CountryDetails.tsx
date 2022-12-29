@@ -56,19 +56,26 @@ export default CountryDetails;
 
 const Main = styled.main<{ isDarkModeActive: boolean }>`
   width: 100%;
-  height: 100%;
+  min-height: 100vh;
   background-color: ${({ isDarkModeActive }) =>
     isDarkModeActive ? "var(--very-dark-blue)" : "var(--white)"};
-  padding: 10rem 6rem 0;
+  padding: 10rem 5rem;
 
   & a {
     text-decoration: none;
     color: inherit;
   }
+
+  @media (max-width: 700px) {
+    padding: var(--padding-mobile);
+    padding-top: 8rem;
+    padding-bottom: 2rem;
+  }
 `;
 
 const Button = styled.button<{ isDarkModeActive: boolean }>`
   border: none;
+  box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.293139);
   padding: 0.5rem 2rem;
   border-radius: 6px;
   display: flex;

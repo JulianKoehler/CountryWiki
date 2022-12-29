@@ -6,7 +6,7 @@ import Filter from "../components/Filter/Filter";
 import Searchbar from "../components/Searchbar/Searchbar";
 import useFetch from "../hooks/useFetch";
 import Country from "../models/countryData";
-import debounce from "../utils/debounce";
+import { ThreeDots } from "react-loader-spinner";
 
 interface IHomeProps {
   query: string;
@@ -85,6 +85,19 @@ const Home = ({
     region === "default" ? setRegionFilter(undefined) : setRegionFilter(region);
   }
 
+  const LoadingSpinner = (
+    <ThreeDots
+      height="80"
+      width="80"
+      radius="9"
+      color="#564da9"
+      ariaLabel="three-dots-loading"
+      wrapperStyle={{}}
+      wrapperClass=""
+      visible={true}
+    />
+  );
+
   return (
     <React.Fragment>
       <FilterSection>
@@ -98,17 +111,35 @@ const Home = ({
           regions={regions}
         />
       </FilterSection>
-      <Main>{isLoading ? <LoadingScreen>Loading...</LoadingScreen> : countryCards}</Main>
+      <Main>{isLoading ? <LoadingScreen>{LoadingSpinner}</LoadingScreen> : countryCards}</Main>
     </React.Fragment>
   );
 };
 
 export default Home;
 
+const FilterSection = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 2rem;
+  padding: 8rem 5rem 0;
+  width: 100%;
+
+  @media (max-width: 700px) {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: var(--padding-mobile);
+    padding-top: 8rem;
+  }
+`;
+
 const Main = styled.main`
   padding: var(--homepage-padding);
+  width: fit-content;
   display: grid;
   margin-top: 3rem;
+  margin-inline: auto;
   grid-template-columns: repeat(6, 1fr);
   grid-row-gap: 4rem;
   grid-column-gap: 4rem;
@@ -135,17 +166,10 @@ const Main = styled.main`
   }
 
   @media (max-width: 700px) {
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: repeat(1, 264px);
+    padding: 0;
+    padding-inline: auto;
   }
-`;
-
-const FilterSection = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 2rem;
-  padding: 8rem 5rem 0;
-  width: 100%;
 `;
 
 const LoadingScreen = styled.p`

@@ -30,6 +30,7 @@ const SearchBar = styled.input<{ isDarkModeActive: boolean }>`
   border: none;
   padding: 1rem 1.5rem 1rem 5rem;
   width: 480px;
+  max-width: 100%;
   font-family: inherit;
   box-shadow: 0px 2px 9px rgba(0, 0, 0, 0.0532439);
   border-radius: 5px;
@@ -39,11 +40,17 @@ const SearchBar = styled.input<{ isDarkModeActive: boolean }>`
   background-position: 8% 50%;
   color: inherit;
 
+  -webkit-appearance: none;
+
   &:focus {
     outline: none;
   }
 
   &::placeholder {
     color: ${props => (props.isDarkModeActive ? "var(--white)" : "var(--blackish-blue)")};
+  }
+
+  @media (max-width: 700px) {
+    padding-left: 4rem;
   }
 `;

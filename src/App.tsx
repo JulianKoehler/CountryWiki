@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import GlobalStyles from "./components/styles/Global";
+import GlobalStyles from "./styles/Global";
 import Country from "./models/countryData";
 
 import CountryDetails from "./pages/CountryDetails";

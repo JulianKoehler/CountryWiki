@@ -1,6 +1,7 @@
-import React from "react";
 import { useContext } from "react";
 import styled from "styled-components";
+import dropdownArrow from "../../assets/images/dropdownArrow.svg";
+import dropdownArrowDarkMode from "../../assets/images/dropdownArrowDarkMode.svg";
 import { ThemeContext } from "../../store/theme-context";
 
 interface IFilterProps {
@@ -40,7 +41,13 @@ const DropDown = styled.select<{ isDarkModeActive: boolean }>`
   font-family: inherit;
   color: ${props => (props.isDarkModeActive ? "var(--white)" : "var(--blackish-blue)")};
   background-color: ${props => (props.isDarkModeActive ? "var(--dark-blue)" : "var(--white)")};
+  background-image: ${props =>
+    props.isDarkModeActive ? `url(${dropdownArrowDarkMode})` : `url(${dropdownArrow})`};
+  background-repeat: no-repeat;
+  background-position: 88%;
   border-radius: 5px;
+  cursor: pointer;
+  -webkit-appearance: initial;
 
   &:focus {
     outline: none;
