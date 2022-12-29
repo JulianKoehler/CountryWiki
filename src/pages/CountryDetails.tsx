@@ -15,7 +15,6 @@ const CountryDetails: React.FC = () => {
   function fetchCountryData(data: Country[]) {
     setCountry(data);
   }
-  console.log(country);
 
   useEffect(() => {
     getData(`alpha/${countryCode}`);
@@ -60,7 +59,7 @@ const Main = styled.main<{ isDarkModeActive: boolean }>`
   height: 100%;
   background-color: ${({ isDarkModeActive }) =>
     isDarkModeActive ? "var(--very-dark-blue)" : "var(--white)"};
-  padding: 12rem 6rem 0;
+  padding: 10rem 6rem 0;
 
   & a {
     text-decoration: none;

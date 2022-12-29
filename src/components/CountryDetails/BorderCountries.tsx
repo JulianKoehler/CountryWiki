@@ -16,23 +16,25 @@ const BorderCountries: React.FC<{ country: Country }> = ({ country }) => {
   const { getData } = useFetch(fetchBorderCountries);
 
   useEffect(() => {
-    getData(`alpha?codes=${country.borders.map(border => border.toLocaleLowerCase())}`);
+    getData(`alpha?codes=${country.borders?.map(border => border.toLocaleLowerCase())}`);
   }, [country]);
 
   return (
     <BorderCountryList>
       <span>Border Countries: </span>
-      {country.borders.map(border => {
-        return (
-          <Link
-            key={border}
-            to={`/countries/${border}`}>
-            <Button isDarkModeActive={isDarkMode}>
-              {borderCountries.find(country => country.cca3 === border)?.name.common}
-            </Button>
-          </Link>
-        );
-      })}
+      {country.borders
+        ? country.borders.map(border => {
+            return (
+              <Link
+                key={border}
+                to={`/countries/${border}`}>
+                <Button isDarkModeActive={isDarkMode}>
+                  {borderCountries.find(country => country.cca3 === border)?.name.common}
+                </Button>
+              </Link>
+            );
+          })
+        : "This country has no neighboring countries."}
     </BorderCountryList>
   );
 };

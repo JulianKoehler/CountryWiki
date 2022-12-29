@@ -29,6 +29,8 @@ const Home = ({
 
   const fetchAllCountries = useCallback(
     (data: []) => {
+      data.sort((a: any, b: any) => b.population - a.population);
+
       setLoadedCountries(data);
       if (regionFilter === undefined) setAllCountries(data);
     },

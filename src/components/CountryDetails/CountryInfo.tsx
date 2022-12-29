@@ -15,8 +15,7 @@ const CountryInfo: React.FC<{ country: Country }> = ({ country }) => {
           <FirstInfoBlock country={country} />
           <SecondInfoBlock country={country} />
         </Details>
-        {country.borders && <BorderCountries country={country} />}
-        {!country.borders && <p>This Country has no borders to other countries.</p>}
+        <BorderCountries country={country} />
       </Info>
     </Container>
   );
@@ -26,7 +25,8 @@ export default CountryInfo;
 
 const Container = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 10%;
   align-items: center;
   width: 100%;
   height: fit-content;
@@ -56,7 +56,8 @@ const Info = styled.div`
 
 const Details = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 10%;
 
   & div p span {
     font-weight: 800;
