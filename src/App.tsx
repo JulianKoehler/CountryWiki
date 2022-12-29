@@ -1,6 +1,7 @@
-import React, { useContext } from "react";
+import { useContext, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import styled from "styled-components";
+import GlobalStyles from "./components/styles/Global";
+import Country from "./models/countryData";
 
 import CountryDetails from "./pages/CountryDetails";
 import Home from "./pages/Home";
@@ -9,38 +10,51 @@ import { ThemeContext } from "./store/theme-context";
 
 function App() {
   const { isDarkMode } = useContext(ThemeContext);
+  const [query, setQuery] = useState<string>("");
+  const [regionFilter, setRegionFilter] = useState<string | undefined>(undefined);
+  const [allCountries, setAllCountries] = useState<Country[]>([]);
+
+  function search(e: React.ChangeEvent<HTMLInputElement>) {
+    setQuery(e.target.value);
+  }
+
+  function handleRegionFilterChange(region: string | undefined) {
+    setRegionFilter(region);
+  }
+
+  function handleLoadAllCountries(countries: Country[]) {
+    setAllCountries(countries);
+  }
+  console.log("App Rendered");
 
   return (
-    <AppContainer isDarkModeActive={isDarkMode}>
-      <BrowserRouter>
-        <Routes>
+    <BrowserRouter>
+      <GlobalStyles isDarkModeActive={isDarkMode} />
+      <Routes>
+        <Route
+          path="/"
+          element={<SharedContent />}>
           <Route
-            path="/"
-            element={<SharedContent />}>
-            <Route
-              index
-              element={<Home />}
-            />
-            <Route
-              path="countries/:countryCode"
-              element={<CountryDetails />}
-            />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </AppContainer>
+            index
+            element={
+              <Home
+                query={query}
+                setQuery={search}
+                regionFilter={regionFilter}
+                setRegionFilter={handleRegionFilterChange}
+                allCountries={allCountries}
+                setAllCountries={handleLoadAllCountries}
+              />
+            }
+          />
+          <Route
+            path="countries/:countryCode"
+            element={<CountryDetails />}
+          />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
 export default App;
-
-const AppContainer = styled.div<{ isDarkModeActive: boolean }>`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  transition: all 0.35s;
-  background-color: ${props => (props.isDarkModeActive ? "var(--very-dark-blue)" : "var(--very-light-gray)")};
-  color: ${props => (props.isDarkModeActive ? "var(--white)" : "var(--blackish-blue)")};
-`;

@@ -31,8 +31,8 @@ const CountryDetails: React.FC = () => {
       <g id="call-made">
         <path
           id="Shape"
-          fill-rule="evenodd"
-          clip-rule="evenodd"
+          fillRule="evenodd"
+          clipRule="evenodd"
           d="M6.46447 4.10744L7.64298 5.28596L3.75389 9.17504L18.6031 9.17504L18.6031 10.825L3.75389 10.825L7.64298 14.714L6.46447 15.8926L0.57191 10L6.46447 4.10744Z"
           fill={isDarkMode ? "var(--white)" : "var(--blackish-blue)"}
         />
@@ -58,8 +58,9 @@ export default CountryDetails;
 const Main = styled.main<{ isDarkModeActive: boolean }>`
   width: 100%;
   height: 100%;
-  background-color: ${({ isDarkModeActive }) => (isDarkModeActive ? "var(--dark-blue)" : "var(--white)")};
-  padding: 12rem 5rem 0;
+  background-color: ${({ isDarkModeActive }) =>
+    isDarkModeActive ? "var(--very-dark-blue)" : "var(--white)"};
+  padding: 12rem 6rem 0;
 
   & a {
     text-decoration: none;
@@ -75,8 +76,7 @@ const Button = styled.button<{ isDarkModeActive: boolean }>`
   align-items: center;
   gap: 0.6rem;
   color: ${({ isDarkModeActive }) => (isDarkModeActive ? "var(--white)" : "var(--blackish-blue)")};
-  background-color: ${({ isDarkModeActive }) =>
-    isDarkModeActive ? "var(--very-dark-blue)" : "var(--white)"};
+  background-color: ${({ isDarkModeActive }) => (isDarkModeActive ? "var(--dark-blue)" : "var(--white)")};
   cursor: pointer;
 
   &:hover {

@@ -2,7 +2,7 @@ import React from "react";
 import Country from "../../models/countryData";
 
 const SecondInfoBlock: React.FC<{ country: Country }> = ({ country }) => {
-  function getCurrency() {
+  function getCurrencies() {
     for (const currency in country.currencies) {
       return `${country.currencies[currency].name}, ${country.currencies[currency].symbol}`;
     }
@@ -17,25 +17,27 @@ const SecondInfoBlock: React.FC<{ country: Country }> = ({ country }) => {
   }
 
   const languages = getLanguages().map(lang => {
-    if (getLanguages().indexOf(lang) === getLanguages().length - 1) return lang;
+    const isLastLanguage = getLanguages().indexOf(lang) === getLanguages().length - 1;
+    if (isLastLanguage) return lang;
     else return `${lang}, `;
   });
 
-  const domains = country.tld.map(domain => {
-    if (country.tld.indexOf(domain) === country.tld.length - 1) return domain;
+  const domains = country.tld?.map(domain => {
+    const isLastDomain = country.tld.indexOf(domain) === country.tld.length - 1;
+    if (isLastDomain) return domain;
     else return `${domain}, `;
   });
 
   return (
     <div>
       <p>
-        <span>Top Level Domain: </span> {domains}
+        <span>Top Level Domain: </span> {domains ? domains : "This country has no domains"}
       </p>
       <p>
-        <span>Currencies: </span> {getCurrency()}
+        <span>Currencies: </span> {country.currencies ? getCurrencies() : "No currencies"}
       </p>
       <p>
-        <span>Languages: </span> {languages}
+        <span>Languages: </span> {country.languages ? languages : "No languages"}
       </p>
     </div>
   );

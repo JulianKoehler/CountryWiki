@@ -1,20 +1,29 @@
-import React, { useContext } from "react";
+import React, { useContext, useMemo } from "react";
 import styled from "styled-components";
-import CountryCardProps from "../../models/countryCardProps";
 import { ThemeContext } from "../../store/theme-context";
+import formatNumber from "../../utils/formatNumber";
 
-export function formatNumber(value: number) {
-  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+interface ICountryCardProps {
+  children?: React.ReactNode;
+  flag: string;
+  name: string;
+  population: number;
+  region: string;
+  capital: string[];
 }
 
-const CountryCard: React.FC<CountryCardProps> = props => {
+const CountryCard = (props: ICountryCardProps) => {
   const { isDarkMode } = useContext(ThemeContext);
+
+  const formattedPopulation = useMemo(() => {
+    return formatNumber(props.population);
+  }, [props.population]);
 
   return (
     <Card isDarkModeActive={isDarkMode}>
       <Flag
         src={props.flag}
-        alt="flag"
+        alt={`Flag of ${props.name}`}
       />
       <QuickFacts>
         <Name>{props.name}</Name>
@@ -22,7 +31,7 @@ const CountryCard: React.FC<CountryCardProps> = props => {
           <span>Capital:</span> {props.capital}
         </Fact>
         <Fact>
-          <span>Population:</span> {formatNumber(props.population)}
+          <span>Population:</span> {formattedPopulation}
         </Fact>
         <Fact>
           <span>Region:</span> {props.region}
@@ -32,7 +41,7 @@ const CountryCard: React.FC<CountryCardProps> = props => {
   );
 };
 
-export default CountryCard;
+export default React.memo(CountryCard);
 
 const Card = styled.div<{ isDarkModeActive: boolean }>`
   max-width: 264px;

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import CountryCard from "../components/CountryCard/CountryCard";
@@ -6,37 +6,49 @@ import Filter from "../components/Filter/Filter";
 import Searchbar from "../components/Searchbar/Searchbar";
 import useFetch from "../hooks/useFetch";
 import Country from "../models/countryData";
+import debounce from "../utils/debounce";
 
-const Home: React.FC = () => {
+interface IHomeProps {
+  query: string;
+  setQuery: (e: ChangeEvent<HTMLInputElement>) => void;
+  regionFilter: string | undefined;
+  setRegionFilter: (region: string | undefined) => void;
+  allCountries: Country[];
+  setAllCountries: (data: Country[]) => void;
+}
+
+const Home = ({
+  query,
+  setQuery,
+  regionFilter,
+  setRegionFilter,
+  allCountries,
+  setAllCountries,
+}: IHomeProps) => {
   const [loadedCountries, setLoadedCountries] = useState<[]>([]);
-  const [allCountries, setAllCountries] = useState<[]>([]);
-  const [query, setQuery] = useState<string>("");
-  const [regionFilter, setRegionFilter] = useState<string | undefined>(undefined);
-
-  const search = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setQuery(e.target.value);
-  };
 
   const fetchAllCountries = useCallback(
     (data: []) => {
       setLoadedCountries(data);
-      console.log(regionFilter === undefined);
-
       if (regionFilter === undefined) setAllCountries(data);
     },
     [regionFilter]
   );
 
-  const filteredCountries = query
-    ? loadedCountries.filter((country: Country) => {
-        return (
-          country.name.common.toLowerCase().startsWith(query.toLocaleLowerCase()) ||
-          country.translations.deu.common.toLowerCase().startsWith(query.toLocaleLowerCase()) ||
-          country.translations.deu.official.toLowerCase().startsWith(query.toLocaleLowerCase()) ||
-          country.altSpellings.some(spelling => spelling.toLowerCase().startsWith(query.toLocaleLowerCase()))
-        );
-      })
-    : loadedCountries;
+  const filteredCountries = useMemo(() => {
+    return query
+      ? loadedCountries.filter((country: Country) => {
+          return (
+            country.name.common.toLowerCase().startsWith(query.toLocaleLowerCase()) ||
+            country.translations.deu.common.toLowerCase().startsWith(query.toLocaleLowerCase()) ||
+            country.translations.deu.official.toLowerCase().startsWith(query.toLocaleLowerCase()) ||
+            country.altSpellings.some(spelling =>
+              spelling.toLowerCase().startsWith(query.toLocaleLowerCase())
+            )
+          );
+        })
+      : loadedCountries;
+  }, [query, loadedCountries]);
 
   const { isLoading, getData } = useFetch(fetchAllCountries);
 
@@ -60,26 +72,26 @@ const Home: React.FC = () => {
     );
   });
 
-  const getAllRegions = () => {
+  const regions = useMemo(() => {
     const regionOfEachCountry = query
-      ? filteredCountries.map((country: Country) => country.region)
+      ? filteredCountries.map((country: any) => country.region)
       : allCountries.map((country: Country) => country.region);
     return new Set<string>(regionOfEachCountry);
-  };
-  const regions = getAllRegions();
+  }, [query, allCountries, loadedCountries]);
 
-  const filterByRegionHandler = (region: string) => {
+  function filterByRegionHandler(region: string) {
     region === "default" ? setRegionFilter(undefined) : setRegionFilter(region);
-  };
+  }
 
   return (
     <React.Fragment>
       <FilterSection>
         <Searchbar
           value={query}
-          searchForCountry={search}
+          searchForCountry={setQuery}
         />
         <Filter
+          value={regionFilter}
           onFilter={filterByRegionHandler}
           regions={regions}
         />
@@ -92,8 +104,9 @@ const Home: React.FC = () => {
 export default Home;
 
 const Main = styled.main`
-  padding: 3.5rem 0;
+  padding: var(--homepage-padding);
   display: grid;
+  margin-top: 3rem;
   grid-template-columns: repeat(6, 1fr);
   grid-row-gap: 4rem;
   grid-column-gap: 4rem;

@@ -26,23 +26,38 @@ export default CountryInfo;
 
 const Container = styled.div`
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
   height: fit-content;
+  max-height: 100%;
   margin-top: 5rem;
 `;
 
 const Flag = styled.img`
   width: 560px;
   border-radius: 10px;
+  box-shadow: 0px 0px 15px 10px rgba(0, 0, 0, 0.05);
 `;
 
 const Info = styled.div`
+  width: 40%;
+
   & h1 {
     font-size: 32px;
+    margin-bottom: 1.5rem;
+  }
+
+  & div span {
+    font-weight: 800;
+    font-size: var(--country);
   }
 `;
 
 const Details = styled.div`
+  display: flex;
+  justify-content: space-between;
+
   & div p span {
     font-weight: 800;
     font-size: var(--country);

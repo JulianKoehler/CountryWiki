@@ -45,7 +45,7 @@ const DarkModeBtn = styled.button<{ darkMode: boolean }>`
   border: unset;
   border-radius: 10px;
   z-index: 1;
-  background-color: ${props => (props.darkMode ? "var(--very-dark-blue)" : "var(--very-light-gray)")};
+  background-color: ${props => (props.darkMode ? "var(--dark-blue)" : "var(--white)")};
   position: relative;
   font-weight: 1000;
   transition: all 400ms;
@@ -59,7 +59,7 @@ const DarkModeBtn = styled.button<{ darkMode: boolean }>`
     height: 100%;
     width: 0;
     border-radius: 10px;
-    background-color: ${props => (props.darkMode ? "var(--very-light-gray)" : "var(--very-dark-blue)")};
+    background-color: ${props => (props.darkMode ? "var(--white)" : "var(--dark-blue)")};
     z-index: -1;
     transition: all 250ms;
   }
