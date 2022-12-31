@@ -4,7 +4,7 @@ import Country from "../../models/countryData";
 const SecondInfoBlock: React.FC<{ country: Country }> = ({ country }) => {
   function getCurrencies() {
     for (const currency in country.currencies) {
-      return `${country.currencies[currency].name}, ${country.currencies[currency].symbol}`;
+      return `${country.currencies[currency].name}`;
     }
   }
 

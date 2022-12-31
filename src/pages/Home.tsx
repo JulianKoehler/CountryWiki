@@ -6,7 +6,7 @@ import Filter from "../components/Filter/Filter";
 import Searchbar from "../components/Searchbar/Searchbar";
 import useFetch from "../hooks/useFetch";
 import Country from "../models/countryData";
-import { ThreeDots } from "react-loader-spinner";
+import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 
 interface IHomeProps {
   query: string;
@@ -52,7 +52,7 @@ const Home = ({
       : loadedCountries;
   }, [query, loadedCountries]);
 
-  const { isLoading, getData } = useFetch(fetchAllCountries);
+  const { isLoading, hasError, getData } = useFetch(fetchAllCountries);
 
   useEffect(() => {
     getData(regionFilter ? `region/${regionFilter}` : "all");
@@ -74,6 +74,8 @@ const Home = ({
     );
   });
 
+  const isNoSearchResults = filteredCountries.length === 0;
+
   const regions = useMemo(() => {
     const regionOfEachCountry = query
       ? filteredCountries.map((country: any) => country.region)
@@ -84,19 +86,6 @@ const Home = ({
   function filterByRegionHandler(region: string) {
     region === "default" ? setRegionFilter(undefined) : setRegionFilter(region);
   }
-
-  const LoadingSpinner = (
-    <ThreeDots
-      height="80"
-      width="80"
-      radius="9"
-      color="#564da9"
-      ariaLabel="three-dots-loading"
-      wrapperStyle={{}}
-      wrapperClass=""
-      visible={true}
-    />
-  );
 
   return (
     <React.Fragment>
@@ -111,7 +100,17 @@ const Home = ({
           regions={regions}
         />
       </FilterSection>
-      <Main>{isLoading ? <LoadingScreen>{LoadingSpinner}</LoadingScreen> : countryCards}</Main>
+      {hasError && !isLoading ? (
+        <ErrorScreen>
+          Sorry, currently our service is not available, please try again at a later time.
+        </ErrorScreen>
+      ) : isLoading ? (
+        <LoadingSpinner />
+      ) : isNoSearchResults ? (
+        <NoSearchResultsScreen>No results for your search.</NoSearchResultsScreen>
+      ) : (
+        <DataGrid>{countryCards}</DataGrid>
+      )}
     </React.Fragment>
   );
 };
@@ -134,7 +133,7 @@ const FilterSection = styled.div`
   }
 `;
 
-const Main = styled.main`
+const DataGrid = styled.main`
   padding: var(--homepage-padding);
   width: fit-content;
   display: grid;
@@ -172,10 +171,17 @@ const Main = styled.main`
   }
 `;
 
-const LoadingScreen = styled.p`
-  font-size: 32px;
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  transform: translateX(-50%);
+const ErrorScreen = styled.p`
+  width: fit-content;
+  margin: 10% auto;
+  color: #df5f49;
+  font-size: 18px;
+  font-weight: 800;
+`;
+
+const NoSearchResultsScreen = styled.p`
+  width: fit-content;
+  margin: 10% auto;
+  font-size: 18px;
+  font-weight: 800;
 `;

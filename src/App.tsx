@@ -25,7 +25,6 @@ function App() {
   function handleLoadAllCountries(countries: Country[]) {
     setAllCountries(countries);
   }
-  console.log("App Rendered");
 
   return (
     <BrowserRouter>

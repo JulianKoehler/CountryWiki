@@ -5,12 +5,13 @@ import useFetch from "../hooks/useFetch";
 import Country from "../models/countryData";
 import { ThemeContext } from "../store/theme-context";
 import CountryInfo from "../components/CountryDetails/CountryInfo";
+import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 
 const CountryDetails: React.FC = () => {
   const [country, setCountry] = useState<Country[]>([]);
   const { countryCode } = useParams();
   const { isDarkMode } = useContext(ThemeContext);
-  const { getData } = useFetch(fetchCountryData);
+  const { getData, isLoading } = useFetch(fetchCountryData);
 
   function fetchCountryData(data: Country[]) {
     setCountry(data);
@@ -39,7 +40,9 @@ const CountryDetails: React.FC = () => {
     </svg>
   );
 
-  return (
+  return isLoading ? (
+    <LoadingSpinner />
+  ) : (
     <Main isDarkModeActive={isDarkMode}>
       <Link to="/">
         <Button isDarkModeActive={isDarkMode}>

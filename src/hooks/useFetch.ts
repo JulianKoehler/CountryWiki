@@ -3,6 +3,7 @@ import { useCallback } from "react";
 
 const useFetch = (fn: (data: []) => void) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [hasError, setHasError] = useState<boolean>(false);
 
   const getData = useCallback(
     async (endpoint: string) => {
@@ -12,8 +13,11 @@ const useFetch = (fn: (data: []) => void) => {
         const resData: [] = await response.json();
 
         setIsLoading(false);
+        setHasError(false);
         fn(resData);
       } catch (error) {
+        setIsLoading(false);
+        setHasError(true);
         console.log(error);
       }
     },
@@ -22,6 +26,7 @@ const useFetch = (fn: (data: []) => void) => {
 
   return {
     isLoading,
+    hasError,
     getData,
   };
 };
