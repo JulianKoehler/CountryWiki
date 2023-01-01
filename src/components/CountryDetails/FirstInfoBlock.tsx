@@ -5,7 +5,7 @@ import formatNumber from "../../utils/formatNumber";
 const FirstInfoBlock: React.FC<{ country: Country }> = ({ country }) => {
   /** Short explaination for the function getNativeName. The structure of the country object is different
    * in detail for each country. One Country may has only one property in the "nativeName" object which is
-   * in itself a property of its parent object "name". Another country may has multiple native Names, for intance
+   * in itself a property of its parent object "name". Another country may has multiple native Names, for instance
    * Belgium which has 3. Mostly the last one is the "real" one so to say. That's why I decided to take always
    * the last entry in the array I get back with Object.keys().
    */

@@ -16,7 +16,7 @@ const BorderCountries: React.FC<{ country: Country }> = ({ country }) => {
   const { getData } = useFetch(fetchBorderCountries);
 
   useEffect(() => {
-    getData(`alpha?codes=${country.borders?.map(border => border.toLocaleLowerCase())}`);
+    getData(`alpha?codes=${country.borders?.map(border => border.toLowerCase())}`);
   }, [country]);
 
   return (

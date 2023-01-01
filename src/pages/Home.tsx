@@ -29,7 +29,7 @@ const Home = ({
 
   const fetchAllCountries = useCallback(
     (data: []) => {
-      data.sort((a: any, b: any) => b.population - a.population);
+      data.sort((a: Country, b: Country) => b.population - a.population);
 
       setLoadedCountries(data);
       if (regionFilter === undefined) setAllCountries(data);
@@ -37,26 +37,24 @@ const Home = ({
     [regionFilter]
   );
 
-  const filteredCountries = useMemo(() => {
-    return query
-      ? loadedCountries.filter((country: Country) => {
-          return (
-            country.name.common.toLowerCase().startsWith(query.toLocaleLowerCase()) ||
-            country.translations.deu.common.toLowerCase().startsWith(query.toLocaleLowerCase()) ||
-            country.translations.deu.official.toLowerCase().startsWith(query.toLocaleLowerCase()) ||
-            country.altSpellings.some(spelling =>
-              spelling.toLowerCase().startsWith(query.toLocaleLowerCase())
-            )
-          );
-        })
-      : loadedCountries;
-  }, [query, loadedCountries]);
-
   const { isLoading, hasError, getData } = useFetch(fetchAllCountries);
 
   useEffect(() => {
     getData(regionFilter ? `region/${regionFilter}` : "all");
   }, [getData, regionFilter]);
+
+  const filteredCountries = useMemo(() => {
+    return query
+      ? loadedCountries.filter((country: Country) => {
+          return (
+            country.name.common.toLowerCase().startsWith(query.toLowerCase()) ||
+            country.translations.deu.common.toLowerCase().startsWith(query.toLowerCase()) ||
+            country.translations.deu.official.toLowerCase().startsWith(query.toLowerCase()) ||
+            country.altSpellings.some(spelling => spelling.toLowerCase().startsWith(query.toLowerCase()))
+          );
+        })
+      : loadedCountries;
+  }, [query, loadedCountries]);
 
   const countryCards = filteredCountries.map((country: Country) => {
     return (
@@ -74,11 +72,9 @@ const Home = ({
     );
   });
 
-  const isNoSearchResults = filteredCountries.length === 0;
-
   const regions = useMemo(() => {
     const regionOfEachCountry = query
-      ? filteredCountries.map((country: any) => country.region)
+      ? filteredCountries.map((country: Country) => country.region)
       : allCountries.map((country: Country) => country.region);
     return new Set<string>(regionOfEachCountry);
   }, [query, allCountries, loadedCountries]);
@@ -86,6 +82,8 @@ const Home = ({
   function filterByRegionHandler(region: string) {
     region === "default" ? setRegionFilter(undefined) : setRegionFilter(region);
   }
+
+  const isNoSearchResults = filteredCountries.length === 0;
 
   return (
     <React.Fragment>
