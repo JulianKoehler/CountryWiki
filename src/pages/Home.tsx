@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import CountryCard from "../components/CountryCard/CountryCard";
@@ -10,6 +10,7 @@ import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 
 interface IHomeProps {
   query: string;
+  debouncedQuery: string;
   setQuery: (e: ChangeEvent<HTMLInputElement>) => void;
   regionFilter: string | undefined;
   setRegionFilter: (region: string | undefined) => void;
@@ -19,6 +20,7 @@ interface IHomeProps {
 
 const Home = ({
   query,
+  debouncedQuery,
   setQuery,
   regionFilter,
   setRegionFilter,
@@ -44,17 +46,19 @@ const Home = ({
   }, [getData, regionFilter]);
 
   const filteredCountries = useMemo(() => {
-    return query
+    return debouncedQuery
       ? loadedCountries.filter((country: Country) => {
           return (
-            country.name.common.toLowerCase().startsWith(query.toLowerCase()) ||
-            country.translations.deu.common.toLowerCase().startsWith(query.toLowerCase()) ||
-            country.translations.deu.official.toLowerCase().startsWith(query.toLowerCase()) ||
-            country.altSpellings.some(spelling => spelling.toLowerCase().startsWith(query.toLowerCase()))
+            country.name.common.toLowerCase().startsWith(debouncedQuery.toLowerCase()) ||
+            country.translations.deu.common.toLowerCase().startsWith(debouncedQuery.toLowerCase()) ||
+            country.translations.deu.official.toLowerCase().startsWith(debouncedQuery.toLowerCase()) ||
+            country.altSpellings.some(spelling =>
+              spelling.toLowerCase().startsWith(debouncedQuery.toLowerCase())
+            )
           );
         })
       : loadedCountries;
-  }, [query, loadedCountries]);
+  }, [debouncedQuery, loadedCountries]);
 
   const countryCards = filteredCountries.map((country: Country) => {
     return (
@@ -77,7 +81,7 @@ const Home = ({
       ? filteredCountries.map((country: Country) => country.region)
       : allCountries.map((country: Country) => country.region);
     return new Set<string>(regionOfEachCountry);
-  }, [query, allCountries, loadedCountries]);
+  }, [query, allCountries, filteredCountries]);
 
   function filterByRegionHandler(region: string) {
     region === "default" ? setRegionFilter(undefined) : setRegionFilter(region);
@@ -86,7 +90,7 @@ const Home = ({
   const isNoSearchResults = filteredCountries.length === 0;
 
   return (
-    <React.Fragment>
+    <>
       <FilterSection>
         <Searchbar
           value={query}
@@ -109,7 +113,7 @@ const Home = ({
       ) : (
         <DataGrid>{countryCards}</DataGrid>
       )}
-    </React.Fragment>
+    </>
   );
 };
 

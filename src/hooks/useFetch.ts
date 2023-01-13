@@ -15,10 +15,10 @@ const useFetch = (fn: (data: []) => void) => {
         setIsLoading(false);
         setHasError(false);
         fn(resData);
-      } catch (error) {
+      } catch (err) {
         setIsLoading(false);
         setHasError(true);
-        console.log(error);
+        console.log(err);
       }
     },
     [fn]

@@ -7,12 +7,14 @@ import CountryDetails from "./pages/CountryDetails";
 import Home from "./pages/Home";
 import SharedContent from "./pages/SharedContent";
 import { ThemeContext } from "./store/theme-context";
+import useDebounce from "./hooks/useDebounce";
 
 function App() {
   const { isDarkMode } = useContext(ThemeContext);
   const [query, setQuery] = useState<string>("");
   const [regionFilter, setRegionFilter] = useState<string | undefined>(undefined);
   const [allCountries, setAllCountries] = useState<Country[]>([]);
+  const debounceValue = useDebounce(query);
 
   function search(e: React.ChangeEvent<HTMLInputElement>) {
     setQuery(e.target.value);
@@ -38,6 +40,7 @@ function App() {
             element={
               <Home
                 query={query}
+                debouncedQuery={debounceValue}
                 setQuery={search}
                 regionFilter={regionFilter}
                 setRegionFilter={handleRegionFilterChange}
