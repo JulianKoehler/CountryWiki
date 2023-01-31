@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import styled from "styled-components";
 import useFetch from "../hooks/useFetch";
@@ -11,15 +11,16 @@ const CountryDetails = () => {
   const [country, setCountry] = useState<Country[]>([]);
   const { countryCode } = useParams();
   const { isDarkMode } = useContext(ThemeContext);
-  const { getData, isLoading } = useFetch(fetchCountryData);
 
-  function fetchCountryData(data: Country[]) {
+  const fetchCountryData = useCallback((data: Country[]) => {
     setCountry(data);
-  }
+  }, []);
+
+  const { getData, isLoading } = useFetch(fetchCountryData);
 
   useEffect(() => {
     getData(`alpha/${countryCode}`);
-  }, [countryCode]);
+  }, [countryCode, getData]);
 
   const arrowBack = (
     <svg
