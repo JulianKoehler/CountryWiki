@@ -1,8 +1,7 @@
-import React from "react";
 import Country from "../../models/countryData";
 import formatNumber from "../../utils/formatNumber";
 
-const FirstInfoBlock: React.FC<{ country: Country }> = ({ country }) => {
+const FirstInfoBlock = ({ country }: { country: Country }) => {
   /** Short explaination for the function getNativeName. The structure of the country object is different
    * in detail for each country. One Country may has only one property in the "nativeName" object which is
    * in itself a property of its parent object "name". Another country may has multiple native Names, for instance
@@ -14,8 +13,14 @@ const FirstInfoBlock: React.FC<{ country: Country }> = ({ country }) => {
     return country.name.nativeName[nativeNames[nativeNames.length - 1]].common;
   }
 
+  const capitals = country.capital?.map(city => {
+    const isLastCity = country.capital.indexOf(city) === country.capital.length - 1;
+    if (isLastCity) return city;
+    else return `${city}, `;
+  });
+
   return (
-    <div>
+    <div className="first-info-block">
       <p>
         <span>Native Name:</span> {country.name.nativeName ? getNativeName() : country.name.common}
       </p>
@@ -29,7 +34,7 @@ const FirstInfoBlock: React.FC<{ country: Country }> = ({ country }) => {
         <span>Sub Region:</span> {country.subregion ? country.subregion : "This country has no subregion"}
       </p>
       <p>
-        <span>Capital:</span> {country.capital ? country.capital : "This country has no capital"}
+        <span>Capital:</span> {country.capital ? capitals : "This country has no capital"}
       </p>
     </div>
   );

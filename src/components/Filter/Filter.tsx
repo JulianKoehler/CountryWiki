@@ -4,13 +4,13 @@ import dropdownArrow from "../../assets/images/dropdownArrow.svg";
 import dropdownArrowDarkMode from "../../assets/images/dropdownArrowDarkMode.svg";
 import { ThemeContext } from "../../store/theme-context";
 
-interface IFilterProps {
+type FilterProps = {
   value: string | undefined;
   regions: Set<string>;
   onFilter: (region: string) => void;
-}
+};
 
-const Filter = ({ value, regions, onFilter }: IFilterProps) => {
+const Filter = ({ value, regions, onFilter }: FilterProps) => {
   const regionsOptions = [...regions].map(region => (
     <option
       key={region}

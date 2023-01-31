@@ -94,4 +94,12 @@ const Details = styled.div`
       font-size: 14px;
     }
   }
+
+  & .first-info-block,
+  & .second-info-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+  }
 `;

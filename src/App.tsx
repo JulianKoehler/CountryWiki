@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import GlobalStyles from "./styles/Global";
 import Country from "./models/countryData";
@@ -24,9 +24,9 @@ function App() {
     setRegionFilter(region);
   }
 
-  function handleLoadAllCountries(countries: Country[]) {
+  const handleLoadAllCountries = useCallback((countries: Country[]) => {
     setAllCountries(countries);
-  }
+  }, []);
 
   return (
     <BrowserRouter>

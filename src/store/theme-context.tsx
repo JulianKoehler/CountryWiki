@@ -1,12 +1,16 @@
-import React, { useState } from "react";
+import React, { ReactNode, useState } from "react";
 import Theme from "../models/theme";
+
+type ThemeProps = {
+  children: ReactNode;
+};
 
 export const ThemeContext = React.createContext<Theme>({
   isDarkMode: false,
   changeThemeHandler: () => {},
 });
 
-const ThemeProvider: React.FC<{ children: React.ReactNode }> = props => {
+const ThemeProvider = ({ children }: ThemeProps) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   const changeThemeHandler = () => {
@@ -18,7 +22,7 @@ const ThemeProvider: React.FC<{ children: React.ReactNode }> = props => {
     changeThemeHandler,
   };
 
-  return <ThemeContext.Provider value={contextValue}>{props.children}</ThemeContext.Provider>;
+  return <ThemeContext.Provider value={contextValue}>{children}</ThemeContext.Provider>;
 };
 
 export default ThemeProvider;

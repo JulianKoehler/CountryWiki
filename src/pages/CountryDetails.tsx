@@ -7,7 +7,7 @@ import { ThemeContext } from "../store/theme-context";
 import CountryInfo from "../components/CountryDetails/CountryInfo";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 
-const CountryDetails: React.FC = () => {
+const CountryDetails = () => {
   const [country, setCountry] = useState<Country[]>([]);
   const { countryCode } = useParams();
   const { isDarkMode } = useContext(ThemeContext);

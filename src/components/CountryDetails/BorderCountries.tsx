@@ -17,7 +17,7 @@ const BorderCountries: React.FC<{ country: Country }> = ({ country }) => {
 
   useEffect(() => {
     getData(`alpha?codes=${country.borders?.map(border => border.toLowerCase())}`);
-  }, [country]);
+  }, [country, getData]);
 
   return (
     <BorderCountryList>

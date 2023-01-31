@@ -8,7 +8,7 @@ import useFetch from "../hooks/useFetch";
 import Country from "../models/countryData";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 
-interface IHomeProps {
+type HomeProps = {
   query: string;
   debouncedQuery: string;
   setQuery: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -16,7 +16,7 @@ interface IHomeProps {
   setRegionFilter: (region: string | undefined) => void;
   allCountries: Country[];
   setAllCountries: (data: Country[]) => void;
-}
+};
 
 const Home = ({
   query,
@@ -26,8 +26,8 @@ const Home = ({
   setRegionFilter,
   allCountries,
   setAllCountries,
-}: IHomeProps) => {
-  const [loadedCountries, setLoadedCountries] = useState<[]>([]);
+}: HomeProps) => {
+  const [loadedCountries, setLoadedCountries] = useState<Country[]>([]);
 
   const fetchAllCountries = useCallback(
     (data: []) => {
@@ -36,7 +36,7 @@ const Home = ({
       setLoadedCountries(data);
       if (regionFilter === undefined) setAllCountries(data);
     },
-    [regionFilter]
+    [regionFilter, setAllCountries]
   );
 
   const { isLoading, hasError, getData } = useFetch(fetchAllCountries);

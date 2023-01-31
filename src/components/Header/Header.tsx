@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 import { ThemeContext } from "../../store/theme-context";
 
-const Header: React.FC = () => {
+const Header = () => {
   const { isDarkMode, changeThemeHandler } = useContext(ThemeContext);
 
   return (

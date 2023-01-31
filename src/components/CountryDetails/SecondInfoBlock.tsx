@@ -1,7 +1,7 @@
 import React from "react";
 import Country from "../../models/countryData";
 
-const SecondInfoBlock: React.FC<{ country: Country }> = ({ country }) => {
+const SecondInfoBlock = ({ country }: { country: Country }) => {
   function getCurrencies() {
     for (const currency in country.currencies) {
       return `${country.currencies[currency].name}`;
@@ -29,7 +29,7 @@ const SecondInfoBlock: React.FC<{ country: Country }> = ({ country }) => {
   });
 
   return (
-    <div>
+    <div className="second-info-block">
       <p>
         <span>Top Level Domain: </span> {domains ? domains : "This country has no domains"}
       </p>
