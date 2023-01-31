@@ -9,7 +9,7 @@ const useFetch = (fn: (data: []) => void) => {
     async (endpoint: string) => {
       setIsLoading(true);
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}${endpoint}`);
+        const response = await fetch(`https://restcountries.com/v3.1/${endpoint}`);
         const resData: [] = await response.json();
 
         setIsLoading(false);
