@@ -137,11 +137,11 @@ const FilterSection = styled.div`
 
 const DataGrid = styled.main`
   padding: var(--homepage-padding);
-  width: fit-content;
+  width: 100%;
   display: grid;
   margin-top: 3rem;
   margin-inline: auto;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(264px, 1fr));
   grid-row-gap: 4rem;
   grid-column-gap: 4rem;
 
@@ -150,26 +150,11 @@ const DataGrid = styled.main`
     color: inherit;
   }
 
-  @media (max-width: 2040px) {
-    grid-template-columns: repeat(5, 1fr);
-  }
-
-  @media (max-width: 1705px) {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
-  @media (max-width: 1380px) {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  @media (max-width: 1060px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
   @media (max-width: 700px) {
     grid-template-columns: repeat(1, 264px);
     padding: 0;
     padding-inline: auto;
+    width: fit-content;
   }
 `;
 
